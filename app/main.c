@@ -14,6 +14,20 @@ typedef struct Lista {
   int tamanho_maximo_daLista;
   itens_lista *dados;
 } Lista;
+
+void ui(void) {
+  printf("Lista de compras\n");
+  printf("1. Visualizar sua lista\n");
+  printf("2. Adicionar itens na sua Lista\n");
+  printf("3. Remover itens da sua Lista\n");
+  printf("4. Sair\n");
+}
+void interface(Lista *list) {
+  int fim = false;
+  do {
+    ui();
+  } while (fim != true);
+}
 int redimensionar(Lista *list) {
   if (!list)
     return 0;                        // evitar retonar null
@@ -58,11 +72,12 @@ int main(int argc, char *argv[]) {
     printf("Erro ao iniciar array\n");
     return 1;
   }
-  itens_lista valor1;
-  strcpy(valor1.nome, "Arroz");
-  valor1.preco = 20.94;
-  inserir(list, valor1);
-  printf("Item no índice 0: %s - R$ %.2f\n", list->dados[0].nome,
-         list->dados[0].preco);
+  interface(list);
+  // itens_lista valor;
+  // strcpy(valor.nome, "Arroz");
+  // valor.preco = 20.94;
+  // inserir(list, valor);
+  // printf("Item no índice 0: %s - R$ %.2f\n", list->dados[0].nome,
+  //        list->dados[0].preco);
   return EXIT_SUCCESS;
 }
