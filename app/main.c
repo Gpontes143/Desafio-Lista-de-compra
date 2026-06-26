@@ -1,0 +1,68 @@
+#include <stdbool.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+#define MAX 3
+typedef struct itens_lista {
+  char nome[100];
+  float preco;
+} itens_lista;
+
+typedef struct Lista {
+  int tamanho_lista;
+  int tamanho_maximo_daLista;
+  itens_lista *dados;
+} Lista;
+int redimensionar(Lista *list) {
+  if (!list)
+    return 0;                        // evitar retonar null
+  list->tamanho_maximo_daLista *= 2; // multiplica por 2?
+  list->dados = (itens_lista *)realloc(
+      list->dados, list->tamanho_maximo_daLista * sizeof(itens_lista));
+  return 1;
+}
+int inserir(Lista *list, itens_lista value) {
+  if (!list) {
+    return 0;
+  }
+  if (list->tamanho_lista == list->tamanho_maximo_daLista) {
+    if (redimensionar(list)) {
+      list->dados[list->tamanho_lista] = value;
+      list->tamanho_lista++;
+      return 1;
+    }
+    return 0;
+  }
+  list->dados[list->tamanho_lista++] = value;
+  return 1;
+}
+int iniciando_lista(Lista **lista) {
+  Lista *list = (Lista *)malloc(sizeof(Lista));
+  if (!list) {
+    return 0;
+  }
+  list->tamanho_lista = 0;
+  list->tamanho_maximo_daLista = MAX;
+  list->dados =
+      (itens_lista *)malloc(list->tamanho_maximo_daLista * sizeof(itens_lista));
+  if (!(list->dados)) {
+    return 0;
+  }
+  *lista = list;
+  return 1;
+}
+int main(int argc, char *argv[]) {
+  Lista *list = NULL;
+  if (!iniciando_lista(&list)) {
+    printf("Erro ao iniciar array\n");
+    return 1;
+  }
+  itens_lista valor1;
+  strcpy(valor1.nome, "Arroz");
+  valor1.preco = 20.94;
+  inserir(list, valor1);
+  printf("Item no índice 0: %s - R$ %.2f\n", list->dados[0].nome,
+         list->dados[0].preco);
+  return EXIT_SUCCESS;
+}
