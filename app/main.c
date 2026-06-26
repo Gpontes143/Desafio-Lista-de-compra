@@ -13,7 +13,14 @@ typedef struct Lista {
   int tamanho_maximo_daLista;
   itens_lista *dados;
 } Lista;
-
+int redimensionar(Lista *list) {
+  if (!list)
+    return 0;                        // evitar retonar null
+  list->tamanho_maximo_daLista *= 2; // multiplica por 2?
+  list->dados = (itens_lista *)realloc(
+      list->dados, list->tamanho_maximo_daLista * sizeof(itens_lista));
+  return 1;
+}
 int inserir(Lista *list, itens_lista value) {
   if (!list) {
     return 0;
