@@ -1,6 +1,7 @@
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #define MAX 3
 typedef struct itens_lista {
@@ -51,4 +52,17 @@ int iniciando_lista(Lista **lista) {
   *lista = list;
   return 1;
 }
-int main(int argc, char *argv[]) { return EXIT_SUCCESS; }
+int main(int argc, char *argv[]) {
+  Lista *list = NULL;
+  if (!iniciando_lista(&list)) {
+    printf("Erro ao iniciar array\n");
+    return 1;
+  }
+  itens_lista valor1;
+  strcpy(valor1.nome, "Arroz");
+  valor1.preco = 20.94;
+  inserir(list, valor1);
+  printf("Item no índice 0: %s - R$ %.2f\n", list->dados[0].nome,
+         list->dados[0].preco);
+  return EXIT_SUCCESS;
+}
