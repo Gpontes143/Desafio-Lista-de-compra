@@ -15,23 +15,10 @@ typedef struct Lista {
   itens_lista *dados;
 } Lista;
 
-void ui(void) {
-  printf("Lista de compras\n");
-  printf("1. Visualizar sua lista\n");
-  printf("2. Adicionar itens na sua Lista\n");
-  printf("3. Remover itens da sua Lista\n");
-  printf("4. Sair\n");
-}
-void interface(Lista *list) {
-  int fim = false;
-  do {
-    ui();
-  } while (fim != true);
-}
 int redimensionar(Lista *list) {
   if (!list)
-    return 0;                        // evitar retonar null
-  list->tamanho_maximo_daLista *= 2; // multiplica por 2?
+    return 0; // evitar retonar null list->tamanho_maximo_daLista *= 2; //
+              // multiplica por 2?
   list->dados = (itens_lista *)realloc(
       list->dados, list->tamanho_maximo_daLista * sizeof(itens_lista));
   return 1;
@@ -50,6 +37,36 @@ int inserir(Lista *list, itens_lista value) {
   }
   list->dados[list->tamanho_lista++] = value;
   return 1;
+}
+void ui() {
+  printf("Lista de compras\n");
+  printf("1. Visualizar sua lista\n");
+  printf("2. Adicionar itens na sua Lista\n");
+  printf("3. Remover itens da sua Lista\n");
+  printf("4. Sair\n");
+}
+void interface(Lista *list, itens_lista valor) {
+  int escolha = 0;
+  while (escolha != 4) {
+    ui();
+    scanf("%d", &escolha);
+    switch (escolha) {
+    case 1:
+      if (list->tamanho_lista != 0) {
+        printf("Item no índice 0: %s - R$ %.2f\n", list->dados[0].nome,
+               list->dados[0].preco);
+      }
+      printf("Não tem itens na lista");
+    case 2:
+      printf("Coloque o nome do produto\n");
+      fgets(valor.nome, sizeof(valor.nome), stdin);
+      printf("Qual o valor do produto?\n");
+      scanf(" %f", &valor.preco);
+      inserir(list, valor);
+      printf("Item no índice 0: %s - R$ %.2f\n", list->dados[0].nome,
+             list->dados[0].preco);
+    }
+  }
 }
 int iniciando_lista(Lista **lista) {
   Lista *list = (Lista *)malloc(sizeof(Lista));
@@ -72,12 +89,7 @@ int main(int argc, char *argv[]) {
     printf("Erro ao iniciar array\n");
     return 1;
   }
-  interface(list);
-  // itens_lista valor;
-  // strcpy(valor.nome, "Arroz");
-  // valor.preco = 20.94;
-  // inserir(list, valor);
-  // printf("Item no índice 0: %s - R$ %.2f\n", list->dados[0].nome,
-  //        list->dados[0].preco);
+  itens_lista valor;
+  interface(list, valor);
   return EXIT_SUCCESS;
 }
