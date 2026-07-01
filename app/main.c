@@ -61,15 +61,21 @@ void interface(Lista *list, itens_lista valor) {
       }
       break;
     case 2:
-      // TODO: Adicionar verificacao de erros para numeros negativos e nome com
-      // valor = ""
-      //
-      getchar();
-      printf("Coloque o nome do produto\n");
-      fgets(valor.nome, sizeof(valor.nome), stdin);
-      printf("Qual o valor do produto?\n");
-      scanf(" %f", &valor.preco);
-      inserir(list, valor);
+      bool t;
+      int tamanho_nome = strlen(valor.nome);
+      while (t != true) {
+        getchar();
+        printf("Coloque o nome do produto\n");
+        fgets(valor.nome, sizeof(valor.nome), stdin);
+        printf("Qual o valor do produto?\n");
+        scanf(" %f", &valor.preco);
+        if (valor.preco < 0 && tamanho_nome == 0) {
+          printf("Voce digitou errado tente novamente\n\n");
+        } else {
+          inserir(list, valor);
+          t = true;
+        }
+      }
     }
   }
 }
