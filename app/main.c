@@ -53,8 +53,8 @@ void interface(Lista *list, itens_lista valor) {
     case 1:
       if (list->tamanho_lista != 0) {
         for (int i = 0; i < list->tamanho_lista; i++) {
-          printf("Item no índice 0: %s - R$ %.2f\n", list->dados[i].nome,
-                 list->dados[i].preco);
+          printf("Item no índice [%d]:\nNome: %sPreço R$ %.2f\n\n\n", i,
+                 list->dados[i].nome, list->dados[i].preco);
         }
       } else {
         printf("Não tem itens na lista\n\n");
