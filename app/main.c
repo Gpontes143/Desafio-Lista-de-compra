@@ -52,20 +52,24 @@ void interface(Lista *list, itens_lista valor) {
     switch (escolha) {
     case 1:
       if (list->tamanho_lista != 0) {
-        printf("Item no índice 0: %s - R$ %.2f\n", list->dados[0].nome,
-               list->dados[0].preco);
+        for (int i = 0; i < list->tamanho_lista; i++) {
+          printf("Item no índice 0: %s - R$ %.2f\n", list->dados[i].nome,
+                 list->dados[i].preco);
+        }
+      } else {
+        printf("Não tem itens na lista\n\n");
       }
-      printf("Não tem itens na lista");
+      break;
     case 2:
       // TODO: Adicionar verificacao de erros para numeros negativos e nome com
       // valor = ""
+      //
+      getchar();
       printf("Coloque o nome do produto\n");
       fgets(valor.nome, sizeof(valor.nome), stdin);
       printf("Qual o valor do produto?\n");
       scanf(" %f", &valor.preco);
       inserir(list, valor);
-      printf("Item no índice 0: %s - R$ %.2f\n", list->dados[0].nome,
-             list->dados[0].preco);
     }
   }
 }
