@@ -17,8 +17,7 @@ typedef struct Lista {
 
 int redimensionar(Lista *list) {
   if (!list)
-    return 0; // evitar retonar null list->tamanho_maximo_daLista *= 2; //
-              // multiplica por 2?
+    return 0;
   list->dados = (itens_lista *)realloc(
       list->dados, list->tamanho_maximo_daLista * sizeof(itens_lista));
   return 1;
@@ -33,6 +32,7 @@ int inserir(Lista *list, itens_lista value) {
       list->tamanho_lista++;
       return 1;
     }
+    return 0;
   }
   list->dados[list->tamanho_lista++] = value;
   return 1;
@@ -55,16 +55,17 @@ void interface(Lista *list, itens_lista valor) {
         printf("Item no índice 0: %s - R$ %.2f\n", list->dados[0].nome,
                list->dados[0].preco);
       }
-      printf("Não tem itens na lista\n\n\n");
-      break;
+      printf("Não tem itens na lista");
     case 2:
-      // TODO: Lidar com erros como valores negativos e espaços
+      // TODO: Adicionar verificacao de erros para numeros negativos e nome com
+      // valor = ""
       printf("Coloque o nome do produto\n");
       fgets(valor.nome, sizeof(valor.nome), stdin);
       printf("Qual o valor do produto?\n");
       scanf(" %f", &valor.preco);
       inserir(list, valor);
-      printf("Produto adicionado\n");
+      printf("Item no índice 0: %s - R$ %.2f\n", list->dados[0].nome,
+             list->dados[0].preco);
     }
   }
 }
